@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist>
+  <dict>
+    <key>CFBundleExecutable</key>
+    <string>SynthFramework</string>
+    <key>CFBundleIconFile</key>
+    <string/>
+    <key>CFBundleIdentifier</key>
+    <string>com.Silver.SynthFramework</string>
+    <key>CFBundleName</key>
+    <string>SynthFramework</string>
+    <key>CFBundleDisplayName</key>
+    <string>SynthFramework</string>
+    <key>CFBundlePackageType</key>
+    <string>BNDL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>1.0.0</string>
+    <key>NSHumanReadableCopyright</key>
+    <string/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>AudioComponents</key>
+    <array>
+      <dict>
+        <key>name</key>
+        <string>Silver: SynthFramework</string>
+        <key>description</key>
+        <string>SynthFramework</string>
+        <key>factoryFunction</key>
+        <string>SynthFrameworkAUFactory</string>
+        <key>manufacturer</key>
+        <string>Manu</string>
+        <key>type</key>
+        <string>aumu</string>
+        <key>subtype</key>
+        <string>Wmgs</string>
+        <key>version</key>
+        <integer>65536</integer>
+      </dict>
+    </array>
+  </dict>
+</plist>
