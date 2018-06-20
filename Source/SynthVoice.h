@@ -21,12 +21,6 @@ public:
     
     //=========================================================================
     
-    void getParam (float* attack) {
-        env1.setAttack(double(*attack));
-    }
-    
-    //=========================================================================
-    
     void getOscType(float* selection) {
         theWave = *selection;
     }
@@ -38,6 +32,35 @@ public:
         if( theWave == 1)   {return osc1.saw(frequency);}
         if( theWave == 2)   {return osc1.square(frequency);}
         else                {return osc1.sinewave(frequency);}
+    }
+    
+    //=========================================================================
+    
+    void getParam (float* attack) {
+        env1.setAttack(double(*attack));
+    }
+    
+    //=========================================================================
+    
+    double setEnvelope () {
+        return env1.adsr(setOscType(), env1.trigger);
+    }
+    
+    //=========================================================================
+    
+    void getFilterParam(float* filterType1, float* filterCutoff1, float* filterRes1) {
+        filterChoice = *filterType1;
+        filterCutoff = *filterCutoff1;
+        filterRes = *filterRes1;
+    }
+    
+    //=========================================================================
+    
+    double setFilter() {
+        if(filterChoice == 0) {return filter1.lores(setEnvelope(), filterCutoff, filterRes);}
+        if(filterChoice == 1) {return filter1.hires(setEnvelope(), filterCutoff, filterRes);}
+        if(filterChoice == 2) {return filter1.bandpass(setEnvelope(), filterCutoff, filterRes);}
+        else{return filter1.lores(setEnvelope(), filterCutoff, filterRes);}
     }
     
     //=========================================================================
@@ -80,9 +103,11 @@ public:
         env1.setRelease(2000);
         
         for(int sample = 0; sample < numSamples; ++sample) {
-            double theSound = env1.adsr(setOscType(), env1.trigger) * level;
+//            double theSound = env1.adsr(setOscType(), env1.trigger) * level;
+            
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel) {
-                outputBuffer.addSample(channel, startSample, theSound);
+                outputBuffer.addSample(channel, startSample, setFilter() * 0.3f);
+//                outputBuffer.addSample(channel, startSample, theSound);
             }
             ++startSample;
         }
@@ -94,8 +119,13 @@ private:
     double frequency;
     int theWave;
     
+    int filterChoice;
+    float filterCutoff;
+    float filterRes;
+    
     maxiOsc osc1;
     maxiEnv env1;
+    maxiFilter filter1;
     
     
     

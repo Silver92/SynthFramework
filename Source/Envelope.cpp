@@ -19,7 +19,6 @@ Envelope::Envelope(SynthFrameworkAudioProcessor& p): processor(p)
     attackSlider.setRange(0.1f, 5000.0f, 0.1);
     attackSlider.setTextBoxStyle(Slider::TextBoxBelow, true, 40, 20);
     attackSlider.setValue(0.1f);
-    attackSlider.addListener(this);
     addAndMakeVisible(&attackSlider);
 
     sliderTree = new AudioProcessorValueTreeState::SliderAttachment(processor.treeState, "attack", attackSlider);
@@ -27,6 +26,7 @@ Envelope::Envelope(SynthFrameworkAudioProcessor& p): processor(p)
 
 Envelope::~Envelope()
 {
+    sliderTree.~ScopedPointer();
 }
 
 void Envelope::paint (Graphics& g)
@@ -37,12 +37,12 @@ void Envelope::paint (Graphics& g)
 void Envelope::resized()
 {
     Rectangle<int> area = getLocalBounds().reduced(40);
-    attackSlider.setBounds(10, 10, 40, 100);
-
-}
-
-void Envelope::sliderValueChanged(Slider* slider) {
+    int sliderWidth = 25;
+    int sliderHeight = 175;
     
+    //draw sliders by reducing area from rectangle above
+    attackSlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
+
 }
 
 

@@ -33,6 +33,15 @@ treeState(*this, nullptr)
     NormalisableRange<float> waveTypeParam (0, 2);
     treeState.createAndAddParameter("wavetype", "WaveType", "WaveType", waveTypeParam, 0, nullptr, nullptr);
     
+    NormalisableRange<float> filterTypeVal (0, 2);
+    NormalisableRange<float> filterVal (20.0f, 10000.0f);
+    NormalisableRange<float> resVal (1, 5);
+    treeState.createAndAddParameter("filterCutoff", "FilterCutoff", "FilterCutoff", filterVal, 500, nullptr, nullptr);
+    treeState.createAndAddParameter("filterRes", "FilterRes", "FilterRes", resVal, 1, nullptr, nullptr);
+    treeState.createAndAddParameter("filterType", "FilterType", "FilterType", filterTypeVal, 0, nullptr, nullptr);
+    
+    
+    
     synth.clearVoices();
     for(int i = 0; i < 10; i++) {
         synth.addVoice(new SynthVoice());
@@ -155,6 +164,9 @@ void SynthFrameworkAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             voice->getParam(treeState.getRawParameterValue("attack"));
             
             voice->getOscType(treeState.getRawParameterValue("wavetype"));
+            voice->getFilterParam(treeState.getRawParameterValue("filterType"),
+                                  treeState.getRawParameterValue("filterCutoff"),
+                                  treeState.getRawParameterValue("filterRes"));
         }
     }
     
